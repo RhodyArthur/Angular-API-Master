@@ -1,0 +1,40 @@
+@import '../../styles/mixins';
+@import '../../styles/variable';
+@import '../../styles/theme';
+
+.main-container {
+    @include flex-container(flex, center, center);
+    flex-direction: column;
+    gap: 1rem;
+    margin: 1.25rem;
+
+    .post {
+        // background-color: var(--secondary-bg);
+        background-color: $dark-gray;
+        padding: 1rem;
+        border-radius: 8px;
+        color: $gray;
+        width: 100%;
+
+        .post-info {
+            @include flex-container(flex, flex-start, center);
+            gap: 1rem;
+
+            .avatar {
+                @include avatar(30px, 50%);
+                @include flex-container(flex, center, center);
+                background-color: $purple;
+                padding: 1rem;;
+            }
+        }
+
+        .post-actions {
+            @include flex-container(flex, space-evenly, center);
+
+            i {
+                color: $purple;
+            }
+        }
+
+    }
+}

@@ -1,0 +1,11 @@
+@mixin flex-container($display, $position, $align) {
+    display: $display;
+    justify-content: $position;
+    align-items: $align;
+}
+
+@mixin avatar($size, $radius) {
+    width: $size;
+    height: $size;
+    border-radius: $radius;
+}

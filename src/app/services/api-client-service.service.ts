@@ -17,7 +17,7 @@ export class ApiClientServiceService {
     // Constructing the query parameters for pagination
     const params = new HttpParams()
     .set('_page', page.toString())
-    .set('pageSize', pageSize.toString());
+    .set('_pageSize', pageSize.toString());
  
     return this.http.get<Data[]>(this.jsonUrl, {params})
     // error handling

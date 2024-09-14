@@ -1,0 +1,12 @@
+@import './variable';
+
+$light-mode: (
+    "main-bg": $dark,
+    "secondary-bg": $dark-gray
+
+);
+
+$light-mode: (
+    "main-bg": $white,
+    "secondary-bg": $dark-gray
+)

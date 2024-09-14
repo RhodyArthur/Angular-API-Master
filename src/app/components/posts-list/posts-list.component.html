@@ -1,7 +1,28 @@
-<div *ngIf="posts$ | async as posts">
+<div class="main-container" *ngIf="posts$ | async as posts">
     @for (post of posts; track $index) {
-            <p>{{post.id}}</p>
-            <p>{{post.title}}</p>
-            <p>{{post.body}}</p>
+        <div class="post">
+            <div class="post-info">
+                <p class="avatar">{{post.id}}</p>
+                <p class="title">{{post.title}}</p>
+            </div>
+
+            <div class="post-actions">
+                <span>
+                    <i class="fa-regular fa-comment-dots"></i>
+                    0
+                </span>
+
+                <span>
+                    <i class="fa-regular fa-heart"></i>
+                    0
+                </span>
+
+                <span>
+                    <i class="fa-solid fa-retweet"></i>
+                    0
+                </span>
+            </div>
+        </div>
+
         }
 </div>
