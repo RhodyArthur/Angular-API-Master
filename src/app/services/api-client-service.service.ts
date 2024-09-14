@@ -13,28 +13,17 @@ export class ApiClientServiceService {
   // inject httpClient Service
   constructor(private http: HttpClient) { }
 
-
-  // get posts
-  // getPosts(): Observable<Data[]> {
-  //   return this.http.get<Data[]>(this.jsonUrl)
-  //   // error handling
-  //   .pipe(
-  //     catchError(err => {
-  //       return throwError('An error occured')
-  //     })
-  //   );
-  // }
-  getPosts(page:number, pageSize:number): Observable<Data[]> {
+  getPosts(page:number = 1, pageSize:number = 10): Observable<Data[]> {
     // Constructing the query parameters for pagination
-    let params = new HttpParams()
-    .set('page', page.toString())
+    const params = new HttpParams()
+    .set('_page', page.toString())
     .set('pageSize', pageSize.toString());
  
     return this.http.get<Data[]>(this.jsonUrl, {params})
     // error handling
     .pipe(
       catchError(err => {
-        return throwError('An error occured')
+        return throwError('An error occured while fetching posts')
       })
     );
   }
@@ -43,5 +32,16 @@ export class ApiClientServiceService {
   // create post
   createPost(body: Data) {
     return this.http.post<Data>(this.jsonUrl, body);
+  }
+
+
+  // update post
+  updatePost(body: Data) {
+    return this.http.put<Data>(`${this.jsonUrl}/${body.id}`, body)
+  }
+
+  // delete post
+  deletePost(id: number) {
+    return this.http.delete<void>(`${this.jsonUrl}/${id}`)
   }
 }

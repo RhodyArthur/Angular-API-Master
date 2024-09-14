@@ -1,1 +1,7 @@
-<p>posts-list works!</p>
+<div *ngIf="posts$ | async as posts">
+    @for (post of posts; track $index) {
+            <p>{{post.id}}</p>
+            <p>{{post.title}}</p>
+            <p>{{post.body}}</p>
+        }
+</div>
