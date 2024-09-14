@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ApiClientServiceService } from './services/api-client-service.service';
-import { Observable } from 'rxjs';
 import { Data } from './interface/data';
 import { CommonModule } from '@angular/common';
 import { PostsListComponent } from "./components/posts-list/posts-list.component";
+import { CommentsService } from './services/comments.service';
 
 @Component({
   selector: 'app-root',
@@ -16,8 +16,11 @@ import { PostsListComponent } from "./components/posts-list/posts-list.component
 export class AppComponent {
   title = 'api-master';
 
-  posts: Data[] = [];
+  constructor(private commentService: CommentsService) {}
 
-  constructor(public apiService: ApiClientServiceService) {}
+  ngOnInit() {
+    this.commentService.getComments()
+    .subscribe(data => console.log(data))
+  }
 
 }
