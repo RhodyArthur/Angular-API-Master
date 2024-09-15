@@ -27,7 +27,7 @@ export class CommentsService {
 
 
   // retrieve comments for a post
-  getPostComments(postId:number, page:number = 1, pageSize:number = 3): Observable<Comment[]> {
+  getPostComments(postId:number, page:number = 1, pageSize:number = 5): Observable<Comment[]> {
     // Constructing the query parameters for pagination
     const params = new HttpParams()
     .set('_page', page.toString())
