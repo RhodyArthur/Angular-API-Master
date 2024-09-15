@@ -1,3 +1,9 @@
+@if (loading) {
+    <div id="spinner">
+        <div class="spinner"></div>
+    </div>
+}
+@else {
 <div class="main-container" *ngIf="posts$ | async as posts">
     @for (post of posts; track $index) {
         <div class="post" (click)="viewPost(post.id)">
@@ -26,3 +32,4 @@
 
         }
 </div>
+}

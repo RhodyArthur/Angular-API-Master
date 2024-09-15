@@ -3,7 +3,7 @@ import { Data, Comment } from '../../interface/data';
 import { forkJoin } from 'rxjs';
 import { ApiClientServiceService } from '../../services/api-client-service.service';
 import { CommentsService } from '../../services/comments.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-post-details',
@@ -16,11 +16,14 @@ export class PostDetailsComponent {
   constructor(private commentService: CommentsService,
     private apiService: ApiClientServiceService,
     private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   post!: Data;
   comments: Comment[] = [];
   postId!:number;
+  loading:boolean = false;
+  error: string | null = null;
 
 ngOnInit() {
   // get id of selected post and use for routing
@@ -35,19 +38,31 @@ ngOnInit() {
 
   // load post details
   loadPostDetails() {
+    this.loading = true;
     if(this.postId) {
       // fetch post details and its comments
       forkJoin([
         this.apiService.getPostById(this.postId),
         this.commentService.getPostComments(this.postId)
       ])
-      .subscribe(([post, comments]) => {
-        this.post = post;
-        this.comments = comments;
-        console.log('post', post)
-        console.log('comments', comments)
-      })
+      .subscribe({
+        next: ([post, comments]) => {
+            this.post = post;
+            this.comments = comments;
+            this.loading = false;
+            this.error = null;
+        }, 
+        error: err => {
+          this.error = err.message;
+          this.loading = false;
+        }
+    })
     }
   }
 
+
+  // navigate to edit page
+  navigateToEdit(postId: number) {
+    this.router.navigate(['/edit', postId]);
+  }
 }

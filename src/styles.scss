@@ -9,6 +9,27 @@
     padding: 0;
 }
 
+.spinner {
+    border: 4px solid #f8efd4;
+    border-top: 4px solid $blue;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 2s linear infinite; 
+    margin: 50% auto;
+}
+
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 body {
     font-family: 'Nunito', sans-serif;
     background-color: $dark;

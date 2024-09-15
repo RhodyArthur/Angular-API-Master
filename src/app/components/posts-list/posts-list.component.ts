@@ -14,18 +14,21 @@ import { Router } from '@angular/router';
 })
 export class PostsListComponent implements OnInit {
 
-  posts$!: Observable<Data[]>
+  posts$!: Observable<Data[]>;
+  loading:boolean = false;
 
   constructor(private apiService: ApiClientServiceService,
               private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.loadPosts()
+    this.loadPosts();
+    this.loading = false;
   }
 
   // load all posts
   loadPosts() {
+    this.loading = true;
     this.posts$ = this.apiService.getPosts(); 
   }
 

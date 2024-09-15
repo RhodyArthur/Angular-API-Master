@@ -13,5 +13,11 @@ export const routes: Routes = [
         path: 'details/:id',
         loadComponent: () => import('./components/post-details/post-details.component').then
         (m => m.PostDetailsComponent)
+    },
+
+    {
+        path: 'edit/:id',
+        loadComponent: () => import('./components/edit-post/edit-post.component').then
+        (m => m.EditPostComponent)
     }
 ];

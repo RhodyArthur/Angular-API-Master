@@ -13,11 +13,11 @@ export class CommentsService {
   constructor(private http: HttpClient) { }
 
   // retrieve comments data
-  getComments(page:number = 1, pageSize:number = 5): Observable<Comment[]> {
+  getComments(page:number = 1, pageSize:number = 3): Observable<Comment[]> {
     // Constructing the query parameters for pagination
     const params = new HttpParams()
     .set('_page', page.toString())
-    .set('_pageSize', pageSize.toString());
+    .set('_limit', pageSize.toString());
     
     return this.http.get<Comment[]>(this.apiUrl, {params})
     .pipe(catchError(err => {
@@ -27,7 +27,15 @@ export class CommentsService {
 
 
   // retrieve comments for a post
-  getPostComments(postId:number): Observable<Comment[]> {
-    return this.http.get<Comment[]>(`${this.apiUrl}?postId=${postId}`)
+  getPostComments(postId:number, page:number = 1, pageSize:number = 3): Observable<Comment[]> {
+    // Constructing the query parameters for pagination
+    const params = new HttpParams()
+    .set('_page', page.toString())
+    .set('_limit', pageSize.toString());
+
+    return this.http.get<Comment[]>(`${this.apiUrl}?postId=${postId}`, {params})
+    .pipe(catchError(err => {
+      return throwError('Unable to fetch comments')
+    }));
   }
 }
