@@ -17,6 +17,7 @@ export class PostsListComponent implements OnInit {
 
   posts$!: Observable<Data[]>;
   loading:boolean = false;
+  error:string | null = null;
   currentPage:number = 1;
   pageSize:number = 10;
   totalPosts:number = 100;
@@ -34,7 +35,15 @@ export class PostsListComponent implements OnInit {
   loadPosts() {
     this.loading = true;
     this.posts$ = this.apiService.getPosts(this.currentPage, this.pageSize); 
-    // this.posts$.subscribe(data => this.totalPosts = 100);
+    this.posts$.subscribe({
+      next: data => {
+        this.totalPosts = 100;
+        this.error = null;
+      },
+      error: err => {
+        this.error = 'Failed to load posts, check your connection';
+      }
+    });
     
   }
 

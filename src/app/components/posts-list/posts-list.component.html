@@ -1,9 +1,13 @@
+@if (error) {
+    <p class="error">{{error}}</p>
+}
+
 @if (loading) {
     <div id="spinner">
         <div class="spinner"></div>
     </div>
 }
-@else {
+@if (!loading && !error) {
 <div class="main-container" *ngIf="posts$ | async as posts">
     @for (post of posts; track $index) {
         <div class="post" (click)="viewPost(post.id)">
@@ -32,7 +36,7 @@
 
         }
 
-        <!-- Pagination component -->
+    <!-- Pagination component -->
     <app-pagination
     [currentPage]="currentPage"
     [totalPosts]="totalPosts"

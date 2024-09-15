@@ -56,7 +56,7 @@ loadPost() {
       console.log(data);
     },
     error: err => {
-      this.error = err.message;
+      this.error = 'Failed to update post details after changes';
       this.loading = false;
     }
   })

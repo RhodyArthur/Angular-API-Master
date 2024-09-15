@@ -61,7 +61,7 @@ ngOnInit() {
 
         }, 
         error: err => {
-          this.error = err.message;
+          this.error = 'Failed to fetch post details';
           this.loading = false;
         }
     })
