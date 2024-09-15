@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { Data, Comment } from '../../interface/data';
 import { forkJoin } from 'rxjs';
 import { ApiClientServiceService } from '../../services/api-client-service.service';
 import { CommentsService } from '../../services/comments.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-post-details',
@@ -16,7 +16,8 @@ export class PostDetailsComponent {
   constructor(private commentService: CommentsService,
     private apiService: ApiClientServiceService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private changeDetectorRef: ChangeDetectorRef
   ) {}
 
   post!: Data;
@@ -29,11 +30,16 @@ ngOnInit() {
   // get id of selected post and use for routing
   this.route.paramMap.subscribe(params => {
     this.postId = +params.get('id')!;
+
     this.loadPostDetails();
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd && event.url === '/details/' + this.postId) {
+        // reload data after navigation
+        this.loadPostDetails();
+      }
+    })
   });
 
-
-  
 }
 
   // load post details
@@ -51,6 +57,8 @@ ngOnInit() {
             this.comments = comments;
             this.loading = false;
             this.error = null;
+            this.changeDetectorRef.detectChanges();
+
         }, 
         error: err => {
           this.error = err.message;

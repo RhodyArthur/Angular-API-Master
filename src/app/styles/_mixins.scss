@@ -9,3 +9,15 @@
     height: $size;
     border-radius: $radius;
 }
+
+
+@mixin flex-box($direction, $gap, $margin) {
+    flex-direction: $direction;
+    gap: $gap;
+    margin: $margin;
+}
+
+@mixin padding-radius($padding, $radius) {
+    padding: $padding;
+    border-radius: $radius;
+}

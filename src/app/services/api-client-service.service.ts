@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, retry, throwError } from 'rxjs';
 import { Data } from '../interface/data';
@@ -24,9 +24,7 @@ export class ApiClientServiceService {
     // error handling
     .pipe(
       retry(2),
-      catchError(err => {
-        return throwError('An error occured while fetching posts')
-      })
+      catchError(this.handleError)
     );
   }
 
@@ -36,33 +34,51 @@ export class ApiClientServiceService {
     return this.http.get<Data>(`${this.jsonUrl}${id}`)
     .pipe(
       retry(2),
-      catchError(err => {
-        return throwError('An error occured while fetching posts')
-      })
+      catchError(this.handleError)
     )
   }
 
 
   // create post
   createPost(body: Data) {
-    return this.http.post<Data>(this.jsonUrl, body);
+    return this.http.post<Data>(this.jsonUrl, body)
+    .pipe(
+      retry(2),
+      catchError(this.handleError)
+    );
   }
 
 
   // update post
   updatePost(body: Data) {
     return this.http.put<Data>(`${this.jsonUrl}/${body.id}`, body)
+    .pipe(
+      retry(2),
+      catchError(this.handleError)
+    );
   }
 
   // delete post
   deletePost(id: number) {
     return this.http.delete<void>(`${this.jsonUrl}/${id}`)
+    .pipe(
+      retry(2),
+      catchError(this.handleError)
+    );
   }
 
   // error handling
-  private handleError() {
+  private handleError(error: HttpErrorResponse): Observable<never> {
     let errorMessage = 'An error occurred while fetching data';
-    return throwError(() => new Error(errorMessage))
+    if (error.error instanceof ErrorEvent) {
+      // Client-side error
+      errorMessage = `Error: ${error.error.message}`;
+    } else {
+      // Server-side error
+      errorMessage = `Error code: ${error.status}\nMessage: ${error.message}`;
+    }
+    console.error(errorMessage);
+    return throwError(() => new Error(errorMessage));
   }
 
 

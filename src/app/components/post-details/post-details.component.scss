@@ -2,10 +2,8 @@
 @import '../../styles/variable';
 
 .details-container {
-    @include flex-container(flex, center, center);
-    flex-direction: column;
-    gap: 1rem;
-    margin: 1.25rem;
+    @include flex-container(flex, center, null);
+    @include flex-box(column, 1rem, 1.25rem);
     line-height: $line-height;
     color: $gray;
 

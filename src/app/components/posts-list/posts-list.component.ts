@@ -16,6 +16,9 @@ export class PostsListComponent implements OnInit {
 
   posts$!: Observable<Data[]>;
   loading:boolean = false;
+  currentPage:number = 1;
+  pageSize:number = 10;
+  totalPosts:number = 0;
 
   constructor(private apiService: ApiClientServiceService,
               private router: Router
@@ -29,11 +32,18 @@ export class PostsListComponent implements OnInit {
   // load all posts
   loadPosts() {
     this.loading = true;
-    this.posts$ = this.apiService.getPosts(); 
+    this.posts$ = this.apiService.getPosts(this.currentPage, this.pageSize); 
+    this.posts$.subscribe(data => this.totalPosts = data.length)
   }
 
-// view post details
-  viewPost(postId: number) {
-    this.router.navigate(['/details', postId])
+  // handle pagination
+  onPageChange(page: number) {
+    this.currentPage = page;
+    this.loadPosts();
   }
-}
+
+  // view post details
+    viewPost(postId: number) {
+      this.router.navigate(['/details', postId])
+    }
+  }
