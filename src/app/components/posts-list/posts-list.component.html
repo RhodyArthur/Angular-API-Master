@@ -31,5 +31,13 @@
         </div>
 
         }
+
+        <!-- Pagination component -->
+    <app-pagination
+    [currentPage]="currentPage"
+    [totalPosts]="totalPosts"
+    [pageSize]="pageSize"
+    (pageChange)="onPageChange($event)">
+  </app-pagination>
 </div>
 }

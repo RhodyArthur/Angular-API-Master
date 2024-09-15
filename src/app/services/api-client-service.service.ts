@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http'
 import { Injectable } from '@angular/core';
 import { catchError, Observable, retry, throwError } from 'rxjs';
 import { Data } from '../interface/data';
+import { ErrorHandlingService } from './error-handling.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,9 @@ export class ApiClientServiceService {
   private jsonUrl: string = 'https://jsonplaceholder.typicode.com/posts/'
 
   // inject httpClient Service
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private errorHandler: ErrorHandlingService
+  ) { }
 
   // fetching all posts
   getPosts(page:number = 1, pageSize:number = 10): Observable<Data[]> {
@@ -24,7 +27,7 @@ export class ApiClientServiceService {
     // error handling
     .pipe(
       retry(2),
-      catchError(this.handleError)
+      catchError(err => this.errorHandler.handleError(err))
     );
   }
 
@@ -34,7 +37,7 @@ export class ApiClientServiceService {
     return this.http.get<Data>(`${this.jsonUrl}${id}`)
     .pipe(
       retry(2),
-      catchError(this.handleError)
+      catchError(err => this.errorHandler.handleError(err))
     )
   }
 
@@ -44,7 +47,7 @@ export class ApiClientServiceService {
     return this.http.post<Data>(this.jsonUrl, body)
     .pipe(
       retry(2),
-      catchError(this.handleError)
+      catchError(err => this.errorHandler.handleError(err))
     );
   }
 
@@ -54,7 +57,7 @@ export class ApiClientServiceService {
     return this.http.put<Data>(`${this.jsonUrl}/${body.id}`, body)
     .pipe(
       retry(2),
-      catchError(this.handleError)
+      catchError(err => this.errorHandler.handleError(err))
     );
   }
 
@@ -63,23 +66,11 @@ export class ApiClientServiceService {
     return this.http.delete<void>(`${this.jsonUrl}/${id}`)
     .pipe(
       retry(2),
-      catchError(this.handleError)
+      catchError(err => this.errorHandler.handleError(err))
     );
   }
 
-  // error handling
-  private handleError(error: HttpErrorResponse): Observable<never> {
-    let errorMessage = 'An error occurred while fetching data';
-    if (error.error instanceof ErrorEvent) {
-      // Client-side error
-      errorMessage = `Error: ${error.error.message}`;
-    } else {
-      // Server-side error
-      errorMessage = `Error code: ${error.status}\nMessage: ${error.message}`;
-    }
-    console.error(errorMessage);
-    return throwError(() => new Error(errorMessage));
-  }
+
 
 
 }
