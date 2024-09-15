@@ -1,0 +1,10 @@
+<div class="details-container">
+    <h2>{{post.title}}</h2>
+    <h3>{{post.body}}</h3>
+
+    @for (comment of comments; track $index) {
+        <div class="comments-container">
+            <p>{{comment.body}}</p>
+        </div>
+    }
+</div>

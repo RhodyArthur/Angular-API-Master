@@ -3,6 +3,7 @@ import { ApiClientServiceService } from '../../services/api-client-service.servi
 import { Data } from '../../interface/data';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-posts-list',
@@ -15,7 +16,9 @@ export class PostsListComponent implements OnInit {
 
   posts$!: Observable<Data[]>
 
-  constructor(private apiService: ApiClientServiceService) {}
+  constructor(private apiService: ApiClientServiceService,
+              private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.loadPosts()
@@ -24,5 +27,10 @@ export class PostsListComponent implements OnInit {
   // load all posts
   loadPosts() {
     this.posts$ = this.apiService.getPosts(); 
+  }
+
+// view post details
+  viewPost(postId: number) {
+    this.router.navigate(['/details', postId])
   }
 }

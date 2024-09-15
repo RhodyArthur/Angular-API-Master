@@ -24,4 +24,10 @@ export class CommentsService {
       return throwError('Unable to fetch comments')
     }));
   }
+
+
+  // retrieve comments for a post
+  getPostComments(postId:number): Observable<Comment[]> {
+    return this.http.get<Comment[]>(`${this.apiUrl}?postId=${postId}`)
+  }
 }

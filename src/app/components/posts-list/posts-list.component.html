@@ -1,6 +1,6 @@
 <div class="main-container" *ngIf="posts$ | async as posts">
     @for (post of posts; track $index) {
-        <div class="post">
+        <div class="post" (click)="viewPost(post.id)">
             <div class="post-info">
                 <p class="avatar">{{post.id}}</p>
                 <p class="title">{{post.title}}</p>
