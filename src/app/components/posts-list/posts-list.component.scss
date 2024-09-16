@@ -3,8 +3,9 @@
 @import '../../styles/theme';
 
 .main-container {
-    @include flex-container(flex, center, center);
+    @include flex-container(flex, center, null);
     @include flex-box(column, 1rem, 1.25rem);
+    color: $gray;
 
     .post {
         // background-color: var(--secondary-bg);

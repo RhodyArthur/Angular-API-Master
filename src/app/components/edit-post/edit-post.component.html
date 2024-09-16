@@ -13,21 +13,25 @@
             <label for="title">Title</label>
             <textarea type="text" id="title" formControlName="title"></textarea>
             @if (postForm.get('title')?.invalid && (postForm.get('title')?.touched || postForm.get('title')?.dirty)) {
+                @if (postForm.get('body')?.errors?.['required']) {
                     <small>Title is required.</small>
+                }
           }
         </div>
 
         <div class="form-item">
             <label for="body">Message</label>
             <textarea name="body" id="body" formControlName="body"></textarea>
-            <div *ngIf="postForm.get('body')?.invalid && (postForm.get('body')?.touched || postForm.get('body')?.dirty)">
-                <small *ngIf="postForm.get('body')?.errors">Body is required.</small>
-              </div>
+            @if (postForm.get('title')?.invalid && (postForm.get('title')?.touched || postForm.get('title')?.dirty)) {
+                @if (postForm.get('body')?.errors?.['required']) {
+                    <small>Body is required.</small>
+                }
+          }
         </div>
 
         <div class="edit-actions">
             <button type="button" (click)="discard()" class="discard-btn">Discard</button>
-            <button type="submit"  class="save-btn">Save</button>
+            <button type="submit"  class="save-btn" [disabled]="postForm.invalid">Save</button>
         </div>
     </form>
 </div>

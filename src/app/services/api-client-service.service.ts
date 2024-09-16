@@ -3,13 +3,14 @@ import { Injectable } from '@angular/core';
 import { catchError, Observable, retry, throwError } from 'rxjs';
 import { Data } from '../interface/data';
 import { ErrorHandlingService } from './error-handling.service';
+import { environment } from '../../environments/environment.dev';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiClientServiceService {
 
-  private jsonUrl: string = 'https://jsonplaceholder.typicode.com/posts/'
+  private jsonUrl = environment.apiUrl;
 
   // inject httpClient Service
   constructor(private http: HttpClient,

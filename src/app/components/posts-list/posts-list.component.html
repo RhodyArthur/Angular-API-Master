@@ -7,8 +7,15 @@
         <div class="spinner"></div>
     </div>
 }
+
+<div class="create-container">
+    <app-create-post/>
+</div>
+
+
 @if (!loading && !error) {
-<div class="main-container" *ngIf="posts$ | async as posts">
+    <div class="main-container" *ngIf="posts$ | async as posts">
+    <p>Trends</p>
     @for (post of posts; track $index) {
         <div class="post" (click)="viewPost(post.id)">
             <div class="post-info">
@@ -19,7 +26,7 @@
             <div class="post-actions">
                 <span>
                     <i class="fa-regular fa-comment-dots"></i>
-                    0
+                    5
                 </span>
 
                 <span>

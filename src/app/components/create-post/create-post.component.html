@@ -1,1 +1,39 @@
-<p>create-post works!</p>
+@if (loading) {
+    <div id="spinner">
+        <div class="spinner"></div>
+    </div>
+}
+
+@if (!loading) {
+    <div class="create-container">
+    <h2>Make a Post</h2>
+    <form class="create-form" [formGroup]="postForm" (ngSubmit)="send()">
+
+        <div class="form-item">
+            <textarea type="text" id="title" formControlName="title" placeholder="Title"></textarea>
+            @if (postForm.get('title')?.invalid && (postForm.get('title')?.touched || postForm.get('title')?.dirty)) {
+                @if (postForm.get('title')?.errors?.['required']) {
+                    <small class="warning">Title is required.</small>
+                }
+          }
+        </div>
+
+        <div class="form-item">
+            <textarea name="body" id="body" formControlName="body" placeholder="Message"></textarea>
+            @if (postForm.get('body')?.invalid && (postForm.get('body')?.touched || postForm.get('body')?.dirty)) {
+                @if (postForm.get('body')?.errors?.['required']) {
+                    <small class="warning">Body is required.</small>
+                }
+          }
+        </div>
+
+        <div class="edit-actions">
+            @if (postForm.get('title')?.dirty || postForm.get('body')?.dirty) {
+                <button type="button" (click)="discard()" class="discard-btn">Discard</button>
+            }
+            <button type="submit"  class="save-btn" [disabled]="postForm.invalid">Send</button>
+        </div>
+    </form>
+</div>
+}
+

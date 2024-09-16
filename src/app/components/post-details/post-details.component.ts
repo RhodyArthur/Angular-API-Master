@@ -73,4 +73,6 @@ ngOnInit() {
   navigateToEdit(postId: number) {
     this.router.navigate(['/edit', postId]);
   }
+
+  
 }

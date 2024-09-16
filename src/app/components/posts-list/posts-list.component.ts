@@ -5,11 +5,12 @@ import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { PaginationComponent } from "../pagination/pagination.component";
+import { CreatePostComponent } from "../create-post/create-post.component";
 
 @Component({
   selector: 'app-posts-list',
   standalone: true,
-  imports: [CommonModule, PaginationComponent],
+  imports: [CommonModule, PaginationComponent, CreatePostComponent],
   templateUrl: './posts-list.component.html',
   styleUrl: './posts-list.component.scss'
 })
