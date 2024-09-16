@@ -40,16 +40,27 @@ export class ApiClientServiceService {
       );
   }
 
-  // retrieve a single post by id
-  getPostById(id:number): Observable<Data> {
-    return this.http.get<Data>(`${this.jsonUrl}${id}`)
-    .pipe(
-      retry(2),
-      catchError(err => this.errorHandler.handleError(err))
-    )
+ 
+ // Get a post by ID from local storage or API
+  getPostById(id: number): Observable<Data> {
+  // Try to get the post from local storage
+  const postFromStorage = this.storageService.postsSubject.value.find(post => post.id === id);
+
+  // If the post exists in local storage, return it as an Observable
+  if (postFromStorage) {
+    return of(postFromStorage);
   }
- 
- 
+
+  // If the post is not in local storage, fetch it from the server
+  return this.http.get<Data>(`${this.jsonUrl}/${id}`).pipe(
+    retry(2),
+    tap(fetchedPost => {
+      // Save the fetched post to local storage
+      this.storageService.addPostToLocalStorage(fetchedPost);
+    }),
+    catchError(err => this.errorHandler.handleError(err))
+  );
+}
 
   // create post
   createPost(body: Data) {

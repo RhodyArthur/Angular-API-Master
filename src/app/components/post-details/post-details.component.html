@@ -16,6 +16,10 @@
     </div>
 
     <h4>Comments</h4>
+    @if (comments.length === 0) {
+        <p>No comments</p>
+    }
+    
     @for (comment of comments; track $index) {
         <div class="comments-container">
             <p>{{comment.body}}</p>
