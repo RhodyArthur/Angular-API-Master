@@ -78,6 +78,7 @@ loadPost() {
         next: () => {
           this.loading = false;
           this.post = updatedPost;
+          this.loadPost();
           this.router.navigate(['/details', this.postId]);
         },
         error: err => {
@@ -86,7 +87,6 @@ loadPost() {
         }
       });
 
-      console.log(updatedPost);
     }
   }
   
