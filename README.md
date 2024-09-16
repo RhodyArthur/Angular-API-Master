@@ -22,6 +22,30 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
+
+## Key Features
+
+- **API Client Service:** Handles GET, POST, PUT, and DELETE requests to the JSONPlaceholder API with proper error handling and retry logic.
+
+- **Components:**
+  - **Post List:** Displays a paginated list of posts.
+  - **Post Details:** Shows a single post with comments.
+  - **Create Post:** Allows users to create a new post.
+  - **Edit Post:** Allows users to edit an existing post.
+
+- **Error Handling:** Provides user-friendly messages and handles network issues and API errors.
+
+- **HTTP Interceptor:** Adds mock authentication tokens to requests and logs HTTP transactions.
+
+- **Pagination:** Implements paginated data fetching with a reusable pagination component.
+
+- **Caching:** Caches GET requests for improved performance and includes a method to clear the cache.
+
+- **Environment Configuration:** Supports multiple environments with different API URLs and build configurations.
+
+- **Lazy Loading:** Uses Angular’s lazy loading feature to load the post detail module only when needed.
+
+
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
