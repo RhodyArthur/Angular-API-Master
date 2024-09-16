@@ -66,5 +66,21 @@ ngOnInit() {
     this.router.navigate(['/edit', postId]);
   }
 
-  
+  //delete selected post
+  deletePost(postId: number) {
+    this.apiService.deletePost(postId)
+      .subscribe({
+        next: () => {
+          this.loading = false;
+          this.loadPostDetails();
+          this.router.navigate(['']);
+        },
+        error: (error) => {
+          // Handle error
+          console.error('Error deleting post:', error);
+          this.error = 'Failed to delete post';
+          this.loading = false;
+        }
+      });
+  }
 }

@@ -53,7 +53,6 @@ loadPost() {
         title: this.post.title,
         body: this.post.body
       });
-      console.log(data);
     },
     error: err => {
       this.error = 'Failed to update post details after changes';

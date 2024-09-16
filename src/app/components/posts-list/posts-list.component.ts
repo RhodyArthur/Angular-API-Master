@@ -43,7 +43,6 @@ export class PostsListComponent implements OnInit {
         this.totalPosts = 150;
         this.error = null;
         this.loading = false;
-        console.log(data, this.currentPage, this.pageSize)
       },
       error: err => {
         this.error = 'Failed to load posts, check your connection';
@@ -62,4 +61,6 @@ export class PostsListComponent implements OnInit {
   viewPost(postId: number) {
     this.router.navigate(['/details', postId])
   }
+
+
   }
