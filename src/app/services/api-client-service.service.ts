@@ -13,6 +13,7 @@ export class ApiClientServiceService {
 
   // api url
   private jsonUrl = environment.apiUrl;
+  private totalPosts:number = 0;
 
   // inject httpClient Service
   constructor(private http: HttpClient,
@@ -22,36 +23,22 @@ export class ApiClientServiceService {
 
 
   // fetching all posts
-  getPosts(page:number = 1, pageSize:number = 10): Observable<Data[]> {
-    // Constructing the query parameters for pagination
+  getPosts(page: number = 1, pageSize: number = 10): Observable<Data[]> {
     const params = new HttpParams()
-    .set('_page', page.toString())
-    .set('_limit', pageSize.toString());
-
-    // fetch posts from local storage if available
-    const post$ = this.storageService.post$;
-
-    return post$.pipe(
-      tap(posts => {
-        if(!posts.length) {
-          // If no posts in local storage, fetch from API and save
-          this.http.get<Data[]>(this.jsonUrl, {params})
-          // error handling
-          .pipe(
-            retry(2),
-            catchError(err => this.errorHandler.handleError(err))
-          )
-          .subscribe(apiPosts => {
-            this.storageService.savePostsToLocalStorage(apiPosts);
-            this.storageService.postsSubject.next(apiPosts);
-          })
-          
-        }
-      })
-    )
- 
+      .set('_page', page.toString())
+      .set('_limit', pageSize.toString());
+  
+    return this.http.get<Data[]>(this.jsonUrl, { params })
+      .pipe(
+        retry(2),
+        catchError(err => this.errorHandler.handleError(err)),
+        // Update storage service after successful API call (optional)
+        tap(apiPosts => {
+          this.storageService.savePostsToLocalStorage(apiPosts);
+          this.storageService.postsSubject.next(apiPosts)
+        })
+      );
   }
-
 
   // retrieve a single post by id
   getPostById(id:number): Observable<Data> {
