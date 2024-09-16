@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ApiClientServiceService } from '../../services/api-client-service.service';
 import { Data } from '../../interface/data';
 import { CommonModule } from '@angular/common';
+import { StorageService } from '../../services/storage.service';
 
 @Component({
   selector: 'app-create-post',
@@ -21,6 +22,7 @@ export class CreatePostComponent {
   postForm: FormGroup;
   
   constructor (private apiService: ApiClientServiceService,
+                private storageService: StorageService,
                 private fb: FormBuilder,
                 private router: Router
   ) {
@@ -38,19 +40,25 @@ export class CreatePostComponent {
     send() {
       if (this.postForm.valid) {    
         const newPost: Data = {
-          id: 0,
+          id: this.storageService.getNextUniqueId(),
           userId: 1,
           ...this.postForm.value
         };
     
+        this.loading = true;
+
         this.apiService.createPost(newPost).subscribe({
           next: () => {
             this.post = newPost;
-            this.clearForm;
+            this.clearForm();
             this.router.navigate(['']);
           },
           error: err => {
             this.error = 'Failed to create post';
+          },
+
+          complete: () => {
+            this.loading = false;
           }
         });
   
@@ -61,7 +69,7 @@ export class CreatePostComponent {
   
     // Discard changes
     discard() {
-      this.clearForm;
+      this.clearForm();
       this.router.navigate(['']);
     }
 

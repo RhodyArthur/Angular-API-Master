@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { PaginationComponent } from "../pagination/pagination.component";
 import { CreatePostComponent } from "../create-post/create-post.component";
+import { StorageService } from '../../services/storage.service';
 
 @Component({
   selector: 'app-posts-list',
@@ -21,15 +22,16 @@ export class PostsListComponent implements OnInit {
   error:string | null = null;
   currentPage:number = 1;
   pageSize:number = 10;
-  totalPosts:number = 100;
+  totalPosts:number = 0;
 
   constructor(private apiService: ApiClientServiceService,
+              private storageService: StorageService,
               private router: Router
   ) {}
 
   ngOnInit(): void {
+    // this.posts$ = this.storageService.post$;
     this.loadPosts();
-    this.loading = false;
   }
 
   // load all posts
@@ -38,7 +40,7 @@ export class PostsListComponent implements OnInit {
     this.posts$ = this.apiService.getPosts(this.currentPage, this.pageSize); 
     this.posts$.subscribe({
       next: data => {
-        this.totalPosts = 100;
+        this.totalPosts = 150;
         this.error = null;
         this.loading = false;
       },

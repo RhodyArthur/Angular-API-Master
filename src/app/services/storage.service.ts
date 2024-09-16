@@ -13,7 +13,7 @@ export class StorageService {
     private jsonUrl = environment.apiUrl;
     
     // for state management
-    private postsSubject = new BehaviorSubject<Data[]>([]);
+    public postsSubject = new BehaviorSubject<Data[]>([]);
     post$ = this.postsSubject.asObservable();
     private localStorageKey = 'posts';
 
@@ -74,4 +74,12 @@ export class StorageService {
     this.postsSubject.next(updatedPosts);
     this.savePostsToLocalStorage(updatedPosts);
   }
+
+    // Get the next unique ID
+  getNextUniqueId(): number {
+    const currentPosts = this.postsSubject.value;
+    const maxId = currentPosts.reduce((max, post) => post.id > max ? post.id : max, 0);
+    return maxId + 1; 
+  }
+
 }
