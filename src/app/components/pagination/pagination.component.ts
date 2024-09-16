@@ -5,7 +5,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './pagination.component.html',
-  styleUrl: './pagination.component.css'
+  styleUrl: './pagination.component.scss'
 })
 export class PaginationComponent {
 
@@ -26,7 +26,6 @@ export class PaginationComponent {
   onPageChange(page: number) {
     if(page >= 1 && page <= this.totalPages){
       this.pageChange.emit(page);
-      console.log('go to next page')
     }
   }
 }

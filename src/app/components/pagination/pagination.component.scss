@@ -1,0 +1,30 @@
+@import '../../styles/_variable';
+
+.pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+
+    button {
+        color: $gray;
+        outline: none;
+        border: none;
+        font-size: 1rem;
+        padding: 0.4rem 0.625rem;
+        border-radius: 4px;
+        background-color: $purple;
+        cursor: pointer;
+
+        &:disabled {
+            background-color: $disabled-color;
+            color: $dark;
+            cursor: not-allowed;
+        }
+    }
+
+    span {
+        color: $gray;
+    }
+}

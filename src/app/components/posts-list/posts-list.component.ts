@@ -39,6 +39,7 @@ export class PostsListComponent implements OnInit {
       next: data => {
         this.totalPosts = 100;
         this.error = null;
+        this.loading = false;
       },
       error: err => {
         this.error = 'Failed to load posts, check your connection';
@@ -51,7 +52,6 @@ export class PostsListComponent implements OnInit {
   onPageChange(page: number) {
     this.currentPage = page;
     this.loadPosts();
-    console.log(page)
   }
 
   // view post details

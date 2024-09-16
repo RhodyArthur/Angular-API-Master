@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse, HttpEventType } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { CacheService } from './services/cache.service';
-import { Data } from './interface/data';
+import { CacheService } from '../services/cache.service';
+import { Data } from '../interface/data';
 
 @Injectable()
 export class CachingInterceptor implements HttpInterceptor {
